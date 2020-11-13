@@ -3,6 +3,7 @@ import System.Console.GetOpt
 import Data.Maybe (fromJust, fromMaybe)
 import System.Environment (getArgs)
 import Control.Concurrent (threadDelay)
+import System.Process (system)
 
 
 defaultFile :: String
@@ -73,7 +74,8 @@ playNSteps :: Int   -> -- steps
               Board -> -- init board
               IO ()
 playNSteps n delay board = do
-    putStrLn $ "\ESC[1J" ++ showBoard board
+    system "clear"
+    putStrLn $ showBoard board
     threadDelay $ delay * 1000
     if n == 0
     then return ()
