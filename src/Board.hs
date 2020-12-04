@@ -7,7 +7,9 @@ module Board
 
 import           Cell
 import           Data.Array
-import           Data.List                      ( foldl' )
+import           Data.List                      ( delete
+                                                , foldl'
+                                                )
 import           Data.Maybe                     ( fromJust )
 
 type Board = Array (Int, Int) Cell
@@ -64,4 +66,10 @@ aliveNeighbours board (x, y) =
   let cell i j = if inRange (bounds board) (i, j) then board ! (i, j) else Dead
   in  length $ filter isAlive $ map (\(i, j) -> cell i j) $ neighboursIndexes
         (x, y)
+
+-- |Indexes of a cell's neighbours (may be out of bounds)
+neighboursIndexes :: (Int, Int) -> [(Int, Int)]
+neighboursIndexes (x, y) =
+  let indexes = [ [ (x + dx, y + dy) | dx <- [-1 .. 1] ] | dy <- [-1 .. 1] ]
+  in  delete (x, y) $ concat indexes
 

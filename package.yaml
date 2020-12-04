@@ -1,9 +1,6 @@
 name:                GameOfLife
 version:             0.1.0.0
-github:              "githubuser/GameOfLife"
 license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
 extra-source-files:
 - README.md
 - ChangeLog.md
@@ -38,3 +35,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - GameOfLife
+    - HUnit
