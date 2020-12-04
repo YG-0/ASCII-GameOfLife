@@ -1,0 +1,40 @@
+name:                GameOfLife
+version:             0.1.0.0
+github:              "githubuser/GameOfLife"
+license:             BSD3
+author:              "Author name here"
+maintainer:          "example@example.com"
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+  dependencies:
+  - array
+
+executables:
+  GameOfLife-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - GameOfLife
+    - process
+
+tests:
+  GameOfLife-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - GameOfLife
