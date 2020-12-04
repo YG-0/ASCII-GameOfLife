@@ -10,7 +10,9 @@ import           Data.Array
 import           Data.List                      ( delete
                                                 , foldl'
                                                 )
-import           Data.Maybe                     ( fromJust )
+import           Data.Maybe                     ( fromJust
+                                                , fromMaybe
+                                                )
 
 type Board = Array (Int, Int) Cell
 
@@ -29,7 +31,7 @@ readBoard str = if not $ isValidBoardLines boardLines
   then Nothing
   else Just $ listArray ((0, 0), (rows - 1, cols - 1)) $ concat justBoardLines
  where
-  boardLines     = map readBoardLine $ lines str
+  boardLines     = map readBoardLine $ filter (not . null) $ lines str
   rows           = length justBoardLines
   cols           = length $ head justBoardLines
   justBoardLines = map fromJust boardLines
@@ -56,9 +58,8 @@ readBoardLine line =
 
 isValidBoardLines :: [Maybe [Cell]] -> Bool
 isValidBoardLines [] = False
-isValidBoardLines bl@(c : cs) =
-  (not $ Nothing `elem` bl) && (and $ map (== (length c)) lengths)
-  where lengths = map length cs
+isValidBoardLines bl = and $ map (== (head lengths)) lengths
+  where lengths = map (length . fromMaybe []) bl
 
 
 aliveNeighbours :: Board -> (Int, Int) -> Int

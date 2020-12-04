@@ -36,3 +36,4 @@ tests:
     dependencies:
     - GameOfLife
     - HUnit
+    - array
