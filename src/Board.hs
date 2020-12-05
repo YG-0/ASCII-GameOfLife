@@ -27,14 +27,15 @@ showBoard board =
 
 
 readBoard :: String -> Maybe Board
-readBoard str = if not $ isValidBoardLines boardLines
+readBoard str = if not $ isAllLensEq strLines
   then Nothing
-  else Just $ listArray ((0, 0), (rows - 1, cols - 1)) $ concat justBoardLines
+  else Just $ listArray ((0, 0), (rows - 1, cols - 1)) $ cellsList
  where
-  boardLines     = map readBoardLine $ filter (not . null) $ lines str
-  rows           = length justBoardLines
-  cols           = length $ head justBoardLines
-  justBoardLines = map fromJust boardLines
+  cellsList = map readCell $ concat strLines
+  rows      = length strLines
+  cols      = length $ head strLines
+  strLines  = filter (not . null) $ lines str
+  isAllLensEq (x : xs) = all (== length x) $ map length xs
 
 
 boardNextState :: Board -> Board
@@ -46,20 +47,6 @@ boardNextState board =
   in  listArray
         bnd
         [ cellNextState (board ! i) (aliveNeigbhoursBoard ! i) | i <- ind ]
-
-
-readBoardLine :: String -> Maybe [Cell]
-readBoardLine line =
-  let maybeCells = map readCell line
-  in  if Nothing `elem` maybeCells
-        then Nothing
-        else Just $ map fromJust maybeCells
-
-
-isValidBoardLines :: [Maybe [Cell]] -> Bool
-isValidBoardLines [] = False
-isValidBoardLines bl = and $ map (== (head lengths)) lengths
-  where lengths = map (length . fromMaybe []) bl
 
 
 aliveNeighbours :: Board -> (Int, Int) -> Int

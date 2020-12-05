@@ -8,15 +8,14 @@ module Cell
 data Cell = Dead | Alive deriving(Eq, Read)
 instance Show Cell where
   show Alive = "#"
-  show Dead  = "-"
+  show Dead  = " "
 
 isAlive :: Cell -> Bool
 isAlive = (== Alive)
 
-readCell :: Char -> Maybe Cell
-readCell c | c == '-'  = Just Dead
-           | c == '#'  = Just Alive
-           | otherwise = Nothing
+readCell :: Char -> Cell
+readCell ch = if ch `elem` " -" then Dead else Alive
+
 
 {- |
  - Returns the next state of a cell
