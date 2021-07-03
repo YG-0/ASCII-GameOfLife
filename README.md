@@ -1,5 +1,7 @@
 Simple ASCII version of Conway's Game of Life
      
+![](demo.gif)
+
 ## Usage
 | Argument  | Description                          | Default Value  |  
 |-----------|--------------------------------------|----------------|
